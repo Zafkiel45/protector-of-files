@@ -1,7 +1,8 @@
 import { createReadStream, createWriteStream } from 'node:fs';
 const { randomBytes, scryptSync, createCipheriv, createDecipheriv } = await import('node:crypto');
+const args = process.argv.slice(2);
 const algorithm = 'aes-256-cbc';
-const password = 'myStrongPassword';
+const password = args[1];
 function HandleEncrypt(input, output) {
     const salt = randomBytes(16);
     const iv = randomBytes(16);
@@ -31,12 +32,12 @@ function HandleDecrypt(input, output) {
     });
 }
 ;
-switch (process.argv.slice(2)[0]) {
+switch (args[0]) {
     case 'encrypt':
-        HandleEncrypt('./notes/note.md', './notes/note.enc');
+        HandleEncrypt('./notes/diary/note.md', './notes/diary/note.enc');
         break;
     case 'decrypt':
-        HandleDecrypt('./notes/note.enc', './notes/note.md');
+        HandleDecrypt('./notes/diary/note.enc', './notes/diary/note.md');
         break;
     default:
         console.log('bad error');

@@ -7,8 +7,10 @@ const {
   createDecipheriv
 } = await import('node:crypto');
 
+const args = process.argv.slice(2);
+
 const algorithm = 'aes-256-cbc';
-const password = 'myStrongPassword';
+const password = args[1];
 
 function HandleEncrypt(input: string, output: string) {
   const salt = randomBytes(16);
@@ -46,7 +48,7 @@ function HandleDecrypt(input: string, output: string) {
   })
 };
 
-switch(process.argv.slice(2)[0]) {
+switch(args[0]) {
   case 'encrypt':
     HandleEncrypt('./notes/note.md', './notes/note.enc');
   break 
