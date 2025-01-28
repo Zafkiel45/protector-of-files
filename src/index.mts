@@ -11,6 +11,10 @@ const args = process.argv.slice(2);
 
 const algorithm = 'aes-256-cbc';
 const password = args[1];
+const locationPath = args[2];
+const fileName = args[3];
+const fileExtension = args[4];
+const destinationPath = args[5];
 
 function HandleEncrypt(input: string, output: string) {
   const salt = randomBytes(16);
@@ -50,10 +54,10 @@ function HandleDecrypt(input: string, output: string) {
 
 switch(args[0]) {
   case 'encrypt':
-    HandleEncrypt('./notes/note.md', './notes/note.enc');
+    HandleEncrypt(`${locationPath}${fileName}${fileExtension}`, `${destinationPath}${fileName}.enc`);
   break 
   case 'decrypt':
-    HandleDecrypt('./notes/note.enc', './notes/note.md')
+    HandleDecrypt(`${locationPath}${fileName}.enc`, `${destinationPath}${fileName}${fileExtension}`)
   break 
   default:
     console.log('bad error');

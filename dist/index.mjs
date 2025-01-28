@@ -3,6 +3,10 @@ const { randomBytes, scryptSync, createCipheriv, createDecipheriv } = await impo
 const args = process.argv.slice(2);
 const algorithm = 'aes-256-cbc';
 const password = args[1];
+const locationPath = args[2];
+const fileName = args[3];
+const fileExtension = args[4];
+const destinationPath = args[5];
 function HandleEncrypt(input, output) {
     const salt = randomBytes(16);
     const iv = randomBytes(16);
@@ -34,10 +38,10 @@ function HandleDecrypt(input, output) {
 ;
 switch (args[0]) {
     case 'encrypt':
-        HandleEncrypt('./notes/diary/note.md', './notes/diary/note.enc');
+        HandleEncrypt(`${locationPath}${fileName}${fileExtension}`, `${destinationPath}${fileName}.enc`);
         break;
     case 'decrypt':
-        HandleDecrypt('./notes/diary/note.enc', './notes/diary/note.md');
+        HandleDecrypt(`${locationPath}${fileName}.enc`, `${destinationPath}${fileName}${fileExtension}`);
         break;
     default:
         console.log('bad error');
